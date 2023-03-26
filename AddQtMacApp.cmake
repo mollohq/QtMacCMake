@@ -33,10 +33,21 @@
 
 # find the Qt root directory
 # todo : support Qt6
-if(NOT Qt5Core_DIR)
-  find_package(Qt5 COMPONENTS Core REQUIRED)
+message(STATUS "Starting Deploy for macOS...")
+message(STATUS "Found Qt for Mac: ${QT_MAC_QT_ROOT}")
+
+if(BUILD_WITH_QT6)
+    if(NOT Qt6Core_DIR)
+        find_package(Qt6 COMPONENTS Core REQUIRED)
+    endif()
+    get_filename_component(QT_MAC_QT_ROOT "${Qt6Core_DIR}/../../.." ABSOLUTE)
+else()
+    if(NOT Qt5Core_DIR)
+        find_package(Qt5 COMPONENTS Core REQUIRED)
+    endif()
+    get_filename_component(QT_MAC_QT_ROOT "${Qt5Core_DIR}/../../.." ABSOLUTE)
 endif()
-get_filename_component(QT_MAC_QT_ROOT "${Qt5Core_DIR}/../../.." ABSOLUTE)
+
 message(STATUS "Found Qt for Mac: ${QT_MAC_QT_ROOT}")
 
 set(QT_MAC_QT_ROOT ${QT_MAC_QT_ROOT})
